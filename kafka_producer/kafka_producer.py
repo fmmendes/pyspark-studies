@@ -1,3 +1,5 @@
+import os
+
 from kafka import KafkaProducer
 from faker import Faker
 
@@ -8,12 +10,12 @@ fake = Faker()
 
 # Initialize the Kafka producer
 producer = KafkaProducer(
-    bootstrap_servers='rpi-prod.local:9092',
+    bootstrap_servers=os.environ["BOOTSTRAP_SERVERS"],
     value_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
 # Define the topic
-topic = 'cdc-orders'
+topic = os.environ["TOPIC"]
 
 # Generate mock orders insert entries
 for _ in range(fake.random_int(min=10, max=20)):

@@ -68,6 +68,7 @@ class DeltaService:
     def save_to_delta(self, df):
         query = (
             df
+            .select(F.col("value.*"), F.col("date"))
             .writeStream
             .format('delta')
             .partitionBy('date')

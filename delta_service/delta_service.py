@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 
 import pyspark.sql.functions as F
 from pyspark.sql import SparkSession
@@ -74,8 +73,8 @@ class DeltaService:
             .partitionBy('date')
             .outputMode('append')
             .option("mergeSchema", "true")
-            .option('checkpointLocation', f'../out/{self.table_name}/delta/checkpoint')
-            .start(f'../out/{self.table_name}/delta/')
+            .option('checkpointLocation', f'../out/delta/checkpoint_{self.table_name}')
+            .start(f'../out/delta/{self.table_name}')
         )
 
         query.awaitTermination()
